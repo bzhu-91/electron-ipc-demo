@@ -1,0 +1,12 @@
+{
+  "name": "electron-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "8.2.2"
+  },
+  "dependencies": {
+    "redux": "4.0.5"
+  }
+}
