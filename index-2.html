@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electron-demo</title>
+    <title>Electron-demo-win-2</title>
 </head>
 <body>
     <pre id="app"></pre>
@@ -14,14 +14,16 @@
         const { safeIpc } = window;
         let i = 0;
 
-        safeIpc.on('channel', (ipcEvent, event) => {
+        safeIpc.on('channel-2', (ipcEvent, event) => {
             appDiv.innerHTML += JSON.stringify(event, null, 2) + '\n';
         });
 
         setInterval(
             () => {
-                safeIpc.send('channel', {
+                safeIpc.send('main', {
                     number: i,
+                    from: 2,
+                    to: i % 2 ? 'win1' : 'main'
                 });
                 i += 1;
             },

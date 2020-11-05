@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 
-const createWindow = () => {
+const createWindow = (number) => {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -13,7 +13,7 @@ const createWindow = () => {
     
     win.loadURL(
         url.format({
-            pathname: path.join(__dirname, "index.html"),
+            pathname: path.join(__dirname, `index-${number}.html`),
             protocol: "file:",
             slashes: true,
         })
@@ -25,10 +25,21 @@ const createWindow = () => {
 }
 
 const onAppReady = () => {
-    const win = createWindow();
+    const win1 = createWindow(1);
+    const win2 = createWindow(2);
 
-    ipcMain.on('channel', (ipcEvent, event) => {
-        win.webContents.send('channel', { mainRecieved: event });
+    ipcMain.on('main', (ipcEvent, event) => {
+        switch(event.to) {
+            case 'main':
+                console.log('main has recieved', event);
+                break;
+            case 'win1':
+                win1.webContents.send('channel-1', event);
+                break;
+            case 'win2':
+                win2.webContents.send('channel-2', event);
+                break;
+        }
     });
 };
 
